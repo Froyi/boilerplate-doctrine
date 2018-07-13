@@ -21,7 +21,13 @@ return [
         'host' => ConfigurationInterface::DEFAULT_SERVER,
         ConfigurationInterface::USER => 'root',
         ConfigurationInterface::PASS => '',
-        'database_name' => 'boilerplate'
+        'database_name' => 'boilerplate-doctrine'
+    ],
+    'doctrineDatabase' => [
+        'driver' => 'pdo_mysql',
+        ConfigurationInterface::USER => 'root',
+        ConfigurationInterface::PASS => '',
+        'dbname' => 'boilerplate-doctrine',
     ],
     'controller' => [
         'namespace' => 'Controller'

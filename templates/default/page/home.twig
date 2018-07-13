@@ -1,3 +1,11 @@
 <div class="home-page js-home-page">
     <h1>Dies ist die Startseite</h1>
+
+    {% if userList %}
+        {% for user in userList %}
+            <div>
+                {{ user.getFirstname }}
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>

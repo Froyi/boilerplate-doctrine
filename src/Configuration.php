@@ -2,6 +2,8 @@
 
 namespace Project;
 
+use Doctrine\ORM\EntityManager;
+
 /**
  * Class Configuration
  * @package Project
@@ -24,6 +26,9 @@ class Configuration
     /** @var array $configuration */
     protected $configuration;
 
+    /** @var EntityManager $entityManager */
+    private static $entityManager;
+
     /**
      * Configuration constructor.
      */
@@ -31,9 +36,25 @@ class Configuration
     {
         $this->configuration = [];
 
-        foreach(self::CONFIG_LIST as $config) {
+        foreach (self::CONFIG_LIST as $config) {
             $this->configuration = array_merge($this->configuration, include $config);
         }
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public static function getEntityManager(): EntityManager
+    {
+        return self::$entityManager;
+    }
+
+    /**
+     * @param EntityManager $entityManager
+     */
+    public static function setEntityManager(EntityManager $entityManager): void
+    {
+        self::$entityManager = $entityManager;
     }
 
     /**

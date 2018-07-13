@@ -3,6 +3,10 @@ declare (strict_types=1);
 
 namespace Project\Controller;
 
+use Project\Configuration;
+use Project\Module\User\User;
+use Project\Module\User\UserRepository;
+
 /**
  * Class IndexController
  * @package Project\Controller
@@ -18,7 +22,16 @@ class IndexController extends DefaultController
      */
     public function indexAction(): void
     {
-        $this->showStandardPage('home');
+        $entityManager = Configuration::getEntityManager();
+        /** @var UserRepository $userRepository */
+        $userRepository = $entityManager->getRepository(User::class);
+
+        $userList = $userRepository->findAll();
+
+        $this->viewRenderer->addViewConfig('page', 'home');
+        $this->viewRenderer->addViewConfig('userList', $userList);
+
+        $this->viewRenderer->renderTemplate();
     }
 
     /**

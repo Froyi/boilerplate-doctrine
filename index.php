@@ -2,7 +2,11 @@
 
 namespace Project;
 
+use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Project\Controller\IndexController;
+use Project\Module\Database\Types\NameType;
 use Project\Utilities\Tools;
 
 \define('ROOT_PATH', getcwd());
@@ -15,7 +19,16 @@ if (Tools::getValue('route') !== false) {
     $route = Tools::getValue('route');
 }
 
+Type::addType('Name', NameType::class);
+
 $configuration = new Configuration();
+
+$config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/src'], true);
+$databaseConfiguration = $configuration->getEntryByName('doctrineDatabase');
+$em = EntityManager::create($databaseConfiguration, $config);
+
+Configuration::setEntityManager($em);
+
 
 try {
     $routing = new Routing($configuration);
